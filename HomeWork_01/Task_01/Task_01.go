@@ -12,15 +12,15 @@ import "fmt"
 func main() {
 
 	var inputValue int
-	fmt.Println("Введите натуральное число, меньшее 1 000 000: ")
+	fmt.Println("Введите натуральное число, меньшее 1 000 000 000: ")
 	fmt.Scan(&inputValue)
 
-	if inputValue <= 0 || inputValue >= 1_000_000 {
+	if inputValue <= 0 || inputValue >= 1_000_000_000 {
 		fmt.Println("Input error")
 		return
 	}
 
-	maxDigit := 0
+	maxDigit := 1
 	for inputValue > 0 {
 		digit := inputValue % 10
 		if digit > maxDigit {
