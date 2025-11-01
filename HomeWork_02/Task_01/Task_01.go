@@ -16,6 +16,33 @@ package main
 
 import "fmt"
 
+func FindingDivisors(number int) (result []int) {
+
+	temp := number
+
+	// Считаем количество простых делителей.
+	for temp%2 == 0 {
+		result = append(result, 2)
+		temp /= 2
+	}
+
+	// Проверяем нечетные делители
+	for i := 3; i*i <= temp; {
+		if temp%i == 0 {
+			result = append(result, i)
+			temp /= i
+		} else {
+			i += 2
+		}
+	}
+
+	if temp > 2 {
+		result = append(result, temp)
+	}
+
+	return result
+}
+
 func CheckNumberDivisors(number int) (string, bool) {
 
 	// Проверяем, что число > 1.
@@ -23,34 +50,19 @@ func CheckNumberDivisors(number int) (string, bool) {
 		return "", false
 	}
 
-	// Считаем количество простых делителей.
-	count := 0
-	temp := number
-
-	for temp%2 == 0 {
-		count++
-		temp /= 2
+	factors := FindingDivisors(number)
+	if len(factors)%2 == 0 {
+		return "even", true
+	} else {
+		return "odd", true
 	}
-
-	// Проверяем нечетные делители
-	for i := 3; i <= temp; i += 2 {
-		for temp%i == 0 {
-			count++
-			temp /= i
-		}
-	}
-
-	if count%2 == 0 {
-		return "even ", true
-	}
-	return "odd ", true
 }
 
 func main() {
 
 	var inputValue int
-	fmt.Println("Введите целое число: ")
+	fmt.Print("Введите целое число: ")
 	fmt.Scan(&inputValue)
 
-	fmt.Print(CheckNumberDivisors(inputValue))
+	fmt.Println(CheckNumberDivisors(inputValue))
 }

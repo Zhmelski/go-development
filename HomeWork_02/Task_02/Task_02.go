@@ -13,6 +13,11 @@ package main
 import "fmt"
 
 func where(numbers []int, predicate func(int) bool) []int {
+
+	if predicate == nil {
+		return []int{} // Возвращаем пустой срез, если predicate передается nil
+	}
+
 	result := []int{}
 	for _, number := range numbers {
 		if predicate(number) {
@@ -23,6 +28,11 @@ func where(numbers []int, predicate func(int) bool) []int {
 }
 
 func forEach(numbers []int, action func(int)) {
+
+	if action == nil {
+		return
+	}
+
 	for _, number := range numbers {
 		action(number)
 	}

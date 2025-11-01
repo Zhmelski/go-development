@@ -11,59 +11,32 @@ package main
 
 import "fmt"
 
-func sequence(numbers ...int) (result []int) {
-	length := len(numbers)
+func generateSliceResult(a, b int) []int {
 
-	if length == 0 {
-		return []int{}
+	if b < a {
+		a, b = b, a
 	}
 
-	if length == 1 {
-		a := numbers[0]
-		result := []int{}
-
-		if a >= 0 {
-			for i := 0; i <= a; i++ {
-				result = append(result, i)
-			}
-		} else {
-			for i := a; i <= 0; i++ {
-				result = append(result, i)
-			}
-		}
-
-		return result
+	result := make([]int, b-a+1)
+	for i := range len(result) {
+		result[i] = a + i
 	}
 
-	if length == 2 {
-		a := numbers[0]
-		b := numbers[1]
-		result := []int{}
-
-		if a >= b {
-			a, b = b, a
-		}
-
-		for i := a; i <= b; i++ {
-			result = append(result, i)
-		}
-
-		/*if a <= b {
-			for i := a; i <= b; i++ {
-				result = append(result, i)
-			}
-		} else {
-			for i := a; i >= b; i-- {
-				result = append(result, i)
-			}
-		}*/
-
-		return result
-	}
-
-	result = make([]int, length)
-	copy(result, numbers)
 	return result
+}
+
+func sequence(numbers ...int) []int {
+
+	switch len(numbers) {
+	case 0:
+		return []int{}
+	case 1:
+		return generateSliceResult(0, numbers[0])
+	case 2:
+		return generateSliceResult(numbers[0], numbers[1])
+	default:
+		return numbers
+	}
 }
 
 func main() {
