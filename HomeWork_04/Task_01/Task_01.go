@@ -41,7 +41,7 @@ func (s *Stack[T]) IsEmpty() bool {
 	return s.top == nil
 }
 
-// 'Pop' removes the top node from the stack and returns its value
+// 'Pop' extracts the top node from the stack and returns its value
 func (s *Stack[T]) Pop() (T, error) {
 	if s.IsEmpty() {
 		var zero T
@@ -78,7 +78,7 @@ func main() {
 	stringStack.Push("Second")
 	stringStack.Push("Third")
 
-	fmt.Println("Removing elements from the stack:")
+	fmt.Println("Extraction elements from the stack:")
 	stringStack.PrintStackValues()
 
 	// Attempt to pop from an empty stack
