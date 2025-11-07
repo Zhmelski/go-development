@@ -24,21 +24,37 @@ func (c Color) Print() {
 func (c Color) GetR() byte {
 	return c[0]
 }
+
 func (c Color) GetG() byte {
 	return c[1]
 }
+
 func (c Color) GetB() byte {
 	return c[2]
 }
 
 // 'SetR', 'SetG', and 'SetB' set the red, green, and blue channels of the color.
 func (c *Color) SetR(r byte) {
+	if c == nil {
+		return
+	}
+
 	c[0] = r
 }
+
 func (c *Color) SetG(g byte) {
+	if c == nil {
+		return
+	}
+
 	c[1] = g
 }
+
 func (c *Color) SetB(b byte) {
+	if c == nil {
+		return
+	}
+
 	c[2] = b
 }
 

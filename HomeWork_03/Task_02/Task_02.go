@@ -43,6 +43,9 @@ func NewMatrix(rows, cols int) *Matrix {
 
 // 'Get' returns the matrix element with indices i, j
 func (m *Matrix) Get(i, j int) float64 {
+	if m == nil {
+		return 0
+	}
 
 	// Bounds checking
 	if i < 0 || i >= m.rows || j < 0 || j >= m.cols {
@@ -56,6 +59,9 @@ func (m *Matrix) Get(i, j int) float64 {
 
 // 'Set' sets the element of the matrix with indices i, j
 func (m *Matrix) Set(i, j int, value float64) {
+	if m == nil {
+		return
+	}
 
 	if i < 0 || i >= m.rows || j < 0 || j >= m.cols {
 		return
@@ -67,6 +73,11 @@ func (m *Matrix) Set(i, j int, value float64) {
 
 // 'Print' outputs the matrix to the console.
 func (m *Matrix) Print() {
+	if m == nil {
+		fmt.Println("Matrix is nil")
+		return
+	}
+
 	for i := 0; i < m.rows; i++ {
 		for j := 0; j < m.cols; j++ {
 			fmt.Printf("%.2f ", m.Get(i, j))

@@ -12,7 +12,7 @@ package main
 import "fmt"
 
 type Cloner interface {
-	Clone() any
+	Clone() Cloner
 }
 
 type Person struct {
@@ -20,7 +20,7 @@ type Person struct {
 	Age  int
 }
 
-func (p Person) Clone() any {
+func (p Person) Clone() Cloner {
 	return Person{
 		Name: p.Name,
 		Age:  p.Age,
@@ -31,7 +31,7 @@ type Rectangle struct {
 	Width, Height float64
 }
 
-func (r Rectangle) Clone() any {
+func (r Rectangle) Clone() Cloner {
 	return Rectangle{
 		Width:  r.Width,
 		Height: r.Height,
@@ -43,7 +43,7 @@ type Book struct {
 	Pages         int
 }
 
-func (b Book) Clone() any {
+func (b Book) Clone() Cloner {
 	return Book{
 		Title:  b.Title,
 		Author: b.Author,
@@ -53,19 +53,15 @@ func (b Book) Clone() any {
 
 // 'sliceClone' returns a new slice of clones of the given slice.
 func sliceClone(slice []any) []any {
-	result := make([]interface{}, 0)
+	result := make([]any, 0)
 
 	for _, item := range slice {
 		switch v := item.(type) {
-		case int, int8, int16, int32, int64:
-			result = append(result, v)
-		case uint, uint8, uint16, uint32, uint64:
-			result = append(result, v)
-		case float32, float64:
-			result = append(result, v)
-		case bool:
-			result = append(result, v)
-		case string:
+		case int, int8, int16, int32, int64,
+			uint, uint8, uint16, uint32, uint64,
+			float32, float64,
+			complex64, complex128,
+			bool, string:
 			result = append(result, v)
 		case Cloner:
 			result = append(result, v.Clone())
@@ -90,7 +86,7 @@ func main() {
 	rect := Rectangle{Width: 10.5, Height: 20.3}
 
 	// Create a slice of various types
-	original := []interface{}{
+	original := []any{
 		42,                     // int
 		3.14,                   // float64
 		true,                   // bool

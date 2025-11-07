@@ -20,13 +20,31 @@ type Point struct {
 
 // 'SetCoordinates' sets new coordinates for a 'Point'
 func (p *Point) SetCoordinates(x, y float64) {
+	if p == nil {
+		return
+	}
+
 	p.X = x
 	p.Y = y
 }
 
 // 'GetCoordinates' returns the coordinates of a 'Point'
 func (p *Point) GetCoordinates() (float64, float64) {
+	if p == nil {
+		return 0, 0
+	}
+
 	return p.X, p.Y
+}
+
+// 'Print' outputs the point ('Point') to the console.
+func (p *Point) Print() {
+	if p == nil {
+		fmt.Println("Point is nil")
+		return
+	}
+
+	fmt.Printf("X=%.4f, Y=%.4f\n", p.X, p.Y)
 }
 
 // 'PointLabeled' represents a point with a text label
@@ -35,21 +53,22 @@ type PointLabeled struct {
 	Label string
 }
 
-// 'SetCoordinates' sets new coordinates for a 'PointLabeled'
-func (pl *PointLabeled) SetCoordinates(x, y float64) {
-	pl.X = x
-	pl.Y = y
-}
+// 'Print' outputs the point ('PointLabeled') to the console.
+func (pl *PointLabeled) Print() {
+	if pl == nil {
+		fmt.Println("PointLabeled is nil")
+		return
+	}
 
-// 'GetCoordinates' returns the coordinates of a 'PointLabeled'
-func (pl *PointLabeled) GetCoordinates() (float64, float64) {
-	return pl.X, pl.Y
+	fmt.Printf("X=%.4f, Y=%.4f, Label: %s\n", pl.X, pl.Y, pl.Label)
 }
 
 // 'Normalizer' is an interface for objects that can be normalized.
 type Normalizer interface {
 	GetCoordinates() (float64, float64)
 	SetCoordinates(float64, float64)
+
+	Print()
 }
 
 // 'normalize' normalizes the coordinates of the given slice of points.
@@ -65,18 +84,11 @@ func normalize(points []Normalizer) {
 	for _, p := range points {
 		x, y := p.GetCoordinates()
 
-		if x < minX {
-			minX = x
-		}
-		if x > maxX {
-			maxX = x
-		}
-		if y < minY {
-			minY = y
-		}
-		if y > maxY {
-			maxY = y
-		}
+		minX = min(minX, x)
+		minY = min(minY, y)
+
+		maxX = max(maxX, x)
+		maxY = max(maxY, y)
 	}
 
 	// Calculate the range
@@ -106,13 +118,8 @@ func normalize(points []Normalizer) {
 
 func printPoints(points []Normalizer) {
 	for i, p := range points {
-		x, y := p.GetCoordinates()
-
-		if pl, ok := p.(*PointLabeled); ok {
-			fmt.Printf("Point %d (label: %s): X=%.4f, Y=%.4f\n", i+1, pl.Label, x, y)
-		} else {
-			fmt.Printf("Point %d: X=%.4f, Y=%.4f\n", i+1, x, y)
-		}
+		fmt.Printf("Point %d: ", i+1)
+		p.Print()
 	}
 }
 
