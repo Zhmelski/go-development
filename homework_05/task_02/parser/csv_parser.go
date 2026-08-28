@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"HomeWork_05/Task_02/models"
+	"homework_05/task_02/models"
 )
 
 // 'ParseCSV' reads and parses a CSV file with sales data.

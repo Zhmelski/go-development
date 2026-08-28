@@ -25,13 +25,13 @@ import (
 	"os"
 	"strings"
 
-	"HomeWork_05/Task_03/k_nn_method"
-	"HomeWork_05/Task_03/parser"
+	"homework_05/task_03/knn_method"
+	"homework_05/task_03/parser"
 )
 
 func main() {
 	const (
-		inputFile = "Task_03/DataSets/data.txt"
+		inputFile = "dataset/data.txt"
 		k         = 3
 	)
 
@@ -46,7 +46,7 @@ func main() {
 	fmt.Printf("Loaded %d objects\n", len(data))
 
 	// Creating a classifier with normalization
-	classifier := k_nn_method.NewClassifier(data, k)
+	classifier := knn_method.NewClassifier(data, k)
 	fmt.Printf("KNN classifier created with k=%d and minimax normalization\n\n", k)
 
 	// Interactive cycle

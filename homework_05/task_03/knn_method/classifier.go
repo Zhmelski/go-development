@@ -1,9 +1,9 @@
-package k_nn_method
+package knn_method
 
 import (
 	"sort"
 
-	"HomeWork_05/Task_03/models"
+	"homework_05/task_03/models"
 )
 
 type Neighbor struct {

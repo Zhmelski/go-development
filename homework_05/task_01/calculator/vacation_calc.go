@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"HomeWork_05/Task_01/models"
+	"homework_05/task_01/models"
 )
 
 // 'CalculateVacationDays' calculates the total vacation days for each employee.

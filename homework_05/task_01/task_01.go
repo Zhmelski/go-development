@@ -23,16 +23,16 @@ package main
 import (
 	"fmt"
 
-	"HomeWork_05/Task_01/calculator"
-	"HomeWork_05/Task_01/parser"
-	"HomeWork_05/Task_01/writer"
+	"homework_05/task_01/calculator"
+	"homework_05/task_01/parser"
+	"homework_05/task_01/writer"
 )
 
 func main() {
 	const (
-		inputFile  = "Task_01/DataSets/data.csv"
-		outputFile = "Task_01/out.txt"
-		errorFile  = "Task_01/errors.txt"
+		inputFile  = "task_01/dataset/data.csv"
+		outputFile = "task_01/out.txt"
+		errorFile  = "task_01/errors.txt"
 	)
 
 	// Parsing a CSV file

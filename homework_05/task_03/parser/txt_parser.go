@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"HomeWork_05/Task_03/models"
+	"homework_05/task_03/models"
 )
 
 // 'ParseDataFile' reads and parses a data file

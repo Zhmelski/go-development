@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"HomeWork_05/Task_01/models"
+	"homework_05/task_01/models"
 )
 
 // 'WriteOutput' writes the results to the out.txt file

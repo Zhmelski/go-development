@@ -30,9 +30,9 @@ package main
 import (
 	"fmt"
 
-	"HomeWork_05/Task_02/parser"
-	"HomeWork_05/Task_02/processor"
-	"HomeWork_05/Task_02/reporter"
+	"homework_05/task_02/parser"
+	"homework_05/task_02/processor"
+	"homework_05/task_02/reporter"
 )
 
 func main() {

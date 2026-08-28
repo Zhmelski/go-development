@@ -3,7 +3,7 @@ package processor
 import (
 	"sort"
 
-	"HomeWork_05/Task_02/models"
+	"homework_05/task_02/models"
 )
 
 // 'ProcessSales' processes sales records and generates data for reporting.

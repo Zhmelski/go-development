@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"HomeWork_05/Task_01/models"
+	"homework_05/task_01/models"
 )
 
 const dateLayout = "1/2/2006"
