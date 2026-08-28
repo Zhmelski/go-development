@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO App - Список задач</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .add-task-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .add-task-form input[type="text"] {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .add-task-form input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-success:hover {
+            background: #40c057;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-danger:hover {
+            background: #fa5252;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background: #667eea;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        td {
+            padding: 15px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: #d3f9d8;
+            color: #2b8a3e;
+        }
+
+        .status-pending {
+            background: #ffe8cc;
+            color: #e8590c;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #868e96;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .task-completed {
+            opacity: 0.7;
+        }
+
+        .task-completed .description {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📋 TODO App</h1>
+
+    <!-- Форма добавления задачи -->
+    <div class="add-task-form">
+        <form method="POST" action="/add" style="display: flex; gap: 10px; width: 100%;">
+            <input type="text" name="description" placeholder="Введите новую задачу..." required>
+            <button type="submit" class="btn btn-primary">➕ Добавить</button>
+        </form>
+    </div>
+
+    <!-- Таблица задач -->
+    {{if .Tasks}}
+    <table>
+        <thead>
+        <tr>
+            <th style="width: 60px;">№</th>
+            <th>Описание</th>
+            <th style="width: 150px;">Статус</th>
+            <th style="width: 150px;">Дата создания</th>
+            <th style="width: 150px;">Дата завершения</th>
+            <th style="width: 200px;">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range .Tasks}}
+        <tr {{if .Completed}}class="task-completed"{{end}}>
+            <td><strong>#{{.ID}}</strong></td>
+            <td class="description">{{.Description}}</td>
+            <td>
+                {{if .Completed}}
+                <span class="status status-completed">✅ Выполнена</span>
+                {{else}}
+                <span class="status status-pending">⏳ В процессе</span>
+                {{end}}
+            </td>
+            <td>{{.CreatedAt}}</td>
+            <td>
+                {{if .CompletedAt}}
+                {{.CompletedAt}}
+                {{else}}
+                -
+                {{end}}
+            </td>
+            <td>
+                <div class="actions">
+                    {{if not .Completed}}
+                    <form method="POST" action="/complete">
+                        <input type="hidden" name="id" value="{{.ID}}">
+                        <button type="submit" class="btn btn-success">✓ Выполнить</button>
+                    </form>
+                    {{end}}
+                    <form method="POST" action="/delete">
+                        <input type="hidden" name="id" value="{{.ID}}">
+                        <button type="submit" class="btn btn-danger">🗑 Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <div class="empty-state">
+        <h2>📝 Список задач пуст</h2>
+        <p>Добавьте первую задачу, используя форму выше</p>
+    </div>
+    {{end}}
+</div>
+</body>
+</html>
